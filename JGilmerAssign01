@@ -1,0 +1,70 @@
+#!/usr/bin/perl
+	use strict; 
+	use warnings;
+
+	my $outfile = "out.txt";
+	open(FILE, $ARGV[0]) or die "Can't read file\n";
+	open(my $out, '>',  $outfile) or die "Can't open file\n";
+
+	my @input = <FILE>;
+	#@tokens =  split ([/func|false|then|true|else|if\s+,\/d+,(?:-\+\*\/?=<>)+,\(|\), \{|\},::=,\;, A-Za-z/], "@input");
+	my @tokens = split(/\s+func|false|then|true|else|if[-\+\*\/\?=<>]+\(\)\{\}(::=)[0-9]+[a-zA-Z]+/, "@input");
+	
+	foreach my $a(@tokens)
+	{
+		print "$a\n";
+	}
+=begin	foreach my $a(@tokens)
+	{
+		if($a =~ m/func|false|then|true|else|if/)
+		{
+			print $out "$a KEYWORD";
+		}
+		elsif($a =~ m/-\+\*\/?=<>/)
+		{
+			print $out "$a OPERATOR";
+		}
+		elsif($a =~ m/0-9+/)
+		{
+			print $out  "$a INT_LITERAL";
+		}
+			elsif($a =~ m/\(/)
+		{
+			print $out "$a LEFT_PAREN";
+		}
+		elsif($a =~ m/\)/)
+		{
+			print $out "$a RIGHT_PAREN";
+		}
+		elsif($a =~ m/,/)
+		{
+			print $out  "$a COMMA";
+		}
+		elsif($a =~ m/::=/)
+		{
+			print $out "$a ASSIGNMENT";
+		}
+		elsif($a =~ m/{/)
+		{
+			print $out "$a LEFT_CURLY";
+		}
+		elsif($a =~ m/}/)
+		{
+			print $out "$a RIGHT_CURLY";
+		}
+		elsif($a =~ m/;/)
+		{
+			print $out "$a SEMICOLON";
+		}
+		elsif($a =~ m/a-zA-Z+/)
+		{
+			print $out "$a IDENTIFIER";
+		}	
+
+
+	}
+=end
+=cut
+	close FILE; 
+
+
